@@ -16,7 +16,7 @@ window.LAUNCHER_CONFIG = {
     apps: [
         { match: 'youtube' },
         { match: 'netflix' },
-        { match: 'prime ?video' },
+        { match: 'prime ?video|amazon ?(tv|video)|amazonignition', label: 'Prime Video' },
         { match: 'disney' },
         { match: 'spotify' },
         { match: 'apple ?tv|aria-video' }

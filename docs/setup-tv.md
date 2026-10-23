@@ -44,5 +44,4 @@ as the developer IP, on the same network.
 
 Uninstall it from the TV's app list like any other app. That also clears its saved settings.
 
-**Settings ▸ Samsung Home** opens Samsung's own home screen (`com.samsung.tv.csfs`), from which TV
-settings are one press away, so the TV's menus are always reachable from inside the launcher.
+The remote's Home button is untouched and still opens Samsung's own home screen and TV menus.

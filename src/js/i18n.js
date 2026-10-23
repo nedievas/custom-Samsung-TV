@@ -53,14 +53,11 @@
         'Appearance': 'Išvaizda',
         'Navigation sound': 'Naršymo garsas',
         'Screen saver': 'Ekrano užsklanda',
-        'Samsung Home': 'Samsung pradžia',
-        'Smart Hub and TV settings': 'Smart Hub ir TV nustatymai',
         'Advanced': 'Išplėstiniai',
         'Refresh, reset, Lab': 'Atnaujinimas, atstatymas, Lab',
         '{n} on Home': '{n} pradžioje',
         'Rotate · {interval}': 'Kaitaliojama · {interval}',
         'After {delay}': 'Po {delay}',
-        'Could not open Samsung Home: {error}': 'Nepavyko atidaryti Samsung pradžios: {error}',
 
         // Shared chip labels
         'On': 'Įjungta',

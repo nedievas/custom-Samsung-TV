@@ -145,8 +145,6 @@ Saved on the TV in `localStorage`. They survive restarts and in-place updates, n
 - **Screen saver** — on or off, start after 3/5/10/15 min idle on Home, photo change every
   60/75/90 s while Background is on Rotate, go dark after 30 min / 1 hour / 2 hours / never, and
   show it now.
-- **Samsung Home** — opens `com.samsung.tv.csfs`, from which TV settings are one press away.
-  Opening `com.samsung.tv.coba.setting` directly did not work on the original's Q70B.
 - **Advanced** — refresh the app list, export settings to the log, reset everything, Lab.
 
 ### Wallpapers
@@ -198,8 +196,10 @@ or not the panel keeps up. Judge it by eye on the TV.
 `getAppsInfo` reports many internal services as visible, so **All apps** keeps only ids that look
 like store apps (`AbCdEfGhIj.Name`, or numeric) plus a short list of preinstalled consumer apps, and
 drops names containing service/worker/agent/e-manual. Yellow shows everything when you need to find
-something. The id of the focused app is shown bottom-left — pin it in `config.local.js` as `{ id: '...' }`,
-which is more reliable than a name match.
+something. When two apps share a name (this TV lists a broken Netflix alias beside the real one),
+All apps shows one, preferring the built-in entry over the store-format one; Yellow shows both. To
+pin an exact app, put its id in `config.local.js` as `{ id: '...' }`; Lab ▸ **Send installed app
+list to log** lists them.
 
 ### HDMI inputs
 

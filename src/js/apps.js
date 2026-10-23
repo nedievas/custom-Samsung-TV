@@ -15,7 +15,9 @@
         'ZODRT12q2l.WebAccountExtension', 'ByJlgt0XeD.CastSettingsApp', 'tv6pbVMQFF.PrivacyChoices',
         '2022ePop01.SmartTV', 'w2VwCK465D.OTApp', 'J9fZJDMi1v.SecurityCenter'
     ];
-    var NOISE = /service|worker|preview|promotion|plugin|launcher|test|sdk|^ep[ -]|factory|daemon|dummy|agent|e-?manual|account|adplayer|privacy|security/i;
+    // Not "launcher": launchable() already drops this app, and Prime Video's id on the UE55MU6502 is
+    // evKhCgZelL.AmazonIgnitionLauncher2.
+    var NOISE = /service|worker|preview|promotion|plugin|test|sdk|^ep[ -]|factory|daemon|dummy|agent|e-?manual|account|adplayer|privacy|security/i;
 
     function withTimeout(promise, ms, what) {
         return new Promise(function (resolve, reject) {
@@ -74,8 +76,10 @@
                 if (entry.id) return a.id === entry.id;
                 return re && (re.test(a.id) || re.test(a.name));
             });
-            // Prefer a visible consumer app when several match (e.g. Netflix and a Netflix service).
-            var app = candidates.find(isConsumer) || candidates[0];
+            // Prefer a consumer app when several match (e.g. Netflix and a Netflix service), and
+            // of two same-named ones the built-in entry (see onePerName).
+            var consumers = candidates.filter(isConsumer);
+            var app = consumers.find(function (a) { return !isStoreApp(a); }) || consumers[0] || candidates[0];
             if (app) {
                 used[app.id] = true;
                 out.push(toItem(app, entry));
@@ -84,9 +88,28 @@
         return out;
     }
 
+    function isStoreApp(app) {
+        return STORE_ID.test(app.id);
+    }
+
+    /*
+     * Some TVs list two apps under one name: the 2017 UE55MU6502 shows two "Netflix", and the
+     * store-format one (RN1MCdNq8t.Netflix) only flashes to black, so: one tile per name,
+     * preferring the built-in or numeric id over the store-format one.
+     */
+    function onePerName(apps) {
+        var best = {};
+        apps.forEach(function (a) {
+            var key = shortName(a.name).toLowerCase();
+            if (!best[key] || (isStoreApp(best[key]) && !isStoreApp(a))) best[key] = a;
+        });
+        return apps.filter(function (a) { return best[shortName(a.name).toLowerCase()] === a; });
+    }
+
+    // showEverything (Yellow) lists every visible app, duplicates included, for finding things.
     function allSorted(apps, showEverything) {
-        return apps
-            .filter(function (a) { return showEverything ? a.show : isConsumer(a); })
+        var list = showEverything ? apps.filter(function (a) { return a.show; }) : onePerName(apps.filter(isConsumer));
+        return list
             .map(function (a) { return toItem(a, {}); })
             .sort(function (x, y) { return x.label.localeCompare(y.label); });
     }

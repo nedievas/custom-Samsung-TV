@@ -11,11 +11,6 @@
     var IME_DONE = 65376;
     var IME_CANCEL = 65385;
 
-    // Samsung's own home screen (Smart Hub); TV settings are one press away from there.
-    // Opening com.samsung.tv.coba.setting directly does not work on the Q70B: a plain launch
-    // fails (UnknownError) and app controls are accepted but show nothing.
-    var SAMSUNG_HOME = 'com.samsung.tv.csfs';
-
     var LOGOS = [
         { key: 'playstation', label: 'PlayStation' },
         { key: 'xbox', label: 'Xbox' },
@@ -84,17 +79,6 @@
         return render;
     }
 
-    var opening = false;
-    function openSamsungHome() {
-        if (opening) return;
-        opening = true;
-        DevLog.log('Open Samsung Home');
-        Apps.launch(SAMSUNG_HOME).catch(function (err) {
-            DevLog.log('Samsung Home failed: ' + DevLog.errorText(err));
-            UI.toast(I18n.t('Could not open Samsung Home: {error}', { error: DevLog.errorText(err) }));
-        }).then(function () { opening = false; });
-    }
-
     // ---------- Overview
 
     function wallpaperSummary() {
@@ -116,7 +100,6 @@
             { label: t('Appearance'), value: t(a.clock === '12h' ? '12-hour' : '24-hour') + ' · ' + Appearance.locale(a.locale).label, run: function () { UI.show('appearance'); } },
             { label: t('Navigation sound'), value: soundSummary(), run: function () { UI.show('sound-settings'); } },
             { label: t('Screen saver'), value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
-            { label: t('Samsung Home'), value: t('Smart Hub and TV settings'), run: openSamsungHome },
             { label: t('Advanced'), value: t('Refresh, reset, Lab'), run: function () { UI.show('advanced'); } }
         ];
     }

@@ -1,8 +1,9 @@
 /*
  * Minimal fake of the Tizen APIs the launcher uses, for desktop-browser preview.
  * Does nothing when running on the TV.
- * The app names are the UE55MU6502's installed apps as its Smart Hub reports them; most ids are
- * illustrative, so use "All apps" on the TV for real ones.
+ * The apps and ids are the UE55MU6502's, as its developer app list reports them, plus a second
+ * "Netflix" like the one it also lists (exact id unconfirmed; org.tizen.netflix-app here). On that TV
+ * the store-format RN1MCdNq8t.Netflix is the one that only flashes to black.
  */
 (function () {
     'use strict';
@@ -15,25 +16,26 @@
 
     var apps = [
         app('TvLauncher.Launcher', 'TV Launcher'),
-        app('111299001912', 'YouTube'),
+        app('9Ur5IzDKqV.TizenYouTube', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
-        app('Go3TvApp00.Go3', 'Go3'),
-        app('Viaplay000.Viaplay', 'Viaplay'),
+        app('RN1MCdNq8t.Netflix', 'Netflix'),
+        app('EZiGWpfep9.Go3', 'Go3'),
+        app('niYSnzL6h1.Viaplay', 'Viaplay'),
         app('MCmYXNxgcu.DisneyPlus', 'Disney+'),
-        app('org.tizen.primevideo', 'Prime Video'),
+        app('evKhCgZelL.AmazonIgnitionLauncher2', 'Prime Video'),
         app('AprZAARz4r.Jellyfin', 'Jellyfin'),
         app('rJeHak5zRg.Spotify', 'Spotify - Music and Podcasts'),
-        app('com.samsung.tv.aria-video', 'Apple TV'),
-        app('FastlinkTv.FastlinkTV', 'Fastlink.lt TV'),
+        app('Y6A54cEa22.AppleTV', 'Apple TV'),
+        app('BAVzq2DNIV.FastlinkltTV', 'Fastlink.lt TV'),
         app('org.tizen.browser', 'Internet'),
-        app('PlexMedia0.Plex', 'Plex'),
-        app('RakutenTv0.RakutenTV', 'Rakuten TV'),
+        app('kIciSQlYEM.plex', 'Plex'),
+        app('vbUQClczfR.Wuakitv', 'Rakuten TV'),
         // Noise that the consumer filter should hide
-        app('tv6pbVMQFF.PrivacyChoices', 'Privacy Choices'),
+        app('jLU2jKvbyN.PrivacyChoices', 'Privacy Choices'),
         app('com.samsung.tv.ep-dataservice-app', 'ep-dataservice-app'),
         app('adplatform.ADPlayer', 'ADPlayer'),
         app('com.samsung.tv.store', 'Apps'),
-        app('25emanual3.emanual', 'e-Manual'),
+        app('AGJFlEOkBo.emanual', 'e-Manual'),
         app('org.tizen.volume-setting', 'Volume', false)
     ];
 
