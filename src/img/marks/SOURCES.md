@@ -15,5 +15,11 @@ Trademarks belong to their owners; used here only to identify apps and devices.
 - movistar.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/movistar.svg (Simple Icons, CC0)
 - playstation.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/playstation.svg (Simple Icons, CC0)
 - nintendoswitch.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/nintendoswitch.svg (Simple Icons, CC0)
+- jellyfin.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/jellyfin.svg (Simple Icons, CC0)
+- viaplay.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/viaplay.svg (Simple Icons, CC0)
+- rakuten.svg: https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/rakuten.svg (Simple Icons, CC0)
 - disneyplus.svg: https://raw.githubusercontent.com/elax46/custom-brand-icons/a53cabf49bf439023a8f33585af30d783bffe51b/icon-svg/disney-plus.svg (Custom Brand Icons, MIT)
 - xbox.svg: https://raw.githubusercontent.com/elax46/custom-brand-icons/a53cabf49bf439023a8f33585af30d783bffe51b/icon-svg/xbox.svg (Custom Brand Icons, MIT)
+- go3.svg: https://naujienos.go3.lt/wp-content/uploads/2024/03/Go3_white.svg (Go3, official logo; also img/tiles/go3.svg)
+- fastlink-tv-icon.png: Fastlink TV app icon, supplied by hand; img/tiles/fastlink.png is its white logo cut out onto transparency
+- teliaplay-logo.png: Telia Play logo, supplied by hand; img/tiles/teliaplay.png is its play-button pebble

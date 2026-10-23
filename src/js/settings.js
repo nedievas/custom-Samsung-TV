@@ -20,7 +20,8 @@
         { key: 'playstation', label: 'PlayStation' },
         { key: 'xbox', label: 'Xbox' },
         { key: 'switch', label: 'Nintendo Switch' },
-        { key: '', label: 'None' }
+        { key: 'teliaplay', label: 'Telia Play' },
+        { key: '', label: 'None' }         // keep last: logoOf falls back to it
     ];
 
     var METHODS = [
@@ -504,7 +505,7 @@
     }
 
     function logoOf(input) {
-        return LOGOS.find(function (l) { return l.key === (input.brand || ''); }) || LOGOS[3];
+        return LOGOS.find(function (l) { return l.key === (input.brand || ''); }) || LOGOS[LOGOS.length - 1];
     }
 
     function consoleEntries() {

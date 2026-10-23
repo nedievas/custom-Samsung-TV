@@ -91,9 +91,10 @@
             .sort(function (x, y) { return x.label.localeCompare(y.label); });
     }
 
-    // Store names often carry a tagline: "Spotify - Music and Podcasts", "TF1+ : Streaming, …"
+    // Store names often carry a tagline: "Spotify - Music and Podcasts", "TF1+ : Streaming, …",
+    // "MEGOGO: TV, Movies, Sports". A dash needs spaces around it, so "Spider-Man" stays whole.
     function shortName(name) {
-        return name.split(/\s+[-:|–]\s+/)[0].trim() || name;
+        return name.split(/\s*[:|]\s+|\s+[-–]\s+/)[0].trim() || name;
     }
 
     function toItem(app, entry) {

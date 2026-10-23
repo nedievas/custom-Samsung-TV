@@ -23,11 +23,11 @@
 
     // ---------- Tiles
 
-    // Pre-coloured by scripts/build-marks.mjs
+    // Pre-coloured by scripts/build-marks.mjs, or a ready-made image (brand.image)
     function markEl(brand) {
         var m = new Image();
         m.className = 'mark';
-        m.src = 'img/tiles/' + brand.key + '.svg';
+        m.src = 'img/tiles/' + (brand.image || brand.key + '.svg');
         if (brand.pad) {
             m.style.top = brand.pad[0] + '%';
             m.style.height = (100 - 2 * brand.pad[0]) + '%';
@@ -113,7 +113,7 @@
         var wrap = el('div', 'input');
         var tile = el('div', 'tile');
         tile.style.background = brand.bg;
-        if (brand.mark) tile.appendChild(markEl(brand));
+        if (brand.mark || brand.image) tile.appendChild(markEl(brand));
         var meta = el('div', 'meta');
         meta.appendChild(el('div', 'name', input.label));
         var port = el('div', 'port');
@@ -131,7 +131,7 @@
     // Console tile for Settings lists: brand colours and logo only.
     function miniInputTile(input) {
         var brand = findBrand(input.brand || '');
-        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark } });
+        return miniTile({ label: input.label, brand: brand && { key: brand.key, bg: brand.bg, fg: brand.fg, mark: brand.mark, image: brand.image } });
     }
 
     // ---------- Home content

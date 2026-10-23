@@ -20,6 +20,9 @@ const marks = {
     movistar: SI + 'movistar.svg',
     playstation: SI + 'playstation.svg',
     nintendoswitch: SI + 'nintendoswitch.svg',
+    jellyfin: SI + 'jellyfin.svg',
+    viaplay: SI + 'viaplay.svg',
+    rakuten: SI + 'rakuten.svg',
     disneyplus: CBI + 'disney-plus.svg',
     xbox: CBI + 'xbox.svg'
 };
@@ -54,6 +57,12 @@ for (const [name, url] of Object.entries(marks)) {
     lines.push(`- ${name}.svg: ${url} (${url.startsWith(SI) ? 'Simple Icons, CC0' : 'Custom Brand Icons, MIT'})`);
     console.log('mark', name);
 }
+// Placed by hand rather than downloaded here; used as is from img/tiles/, not recoloured.
+lines.push(
+    '- go3.svg: https://naujienos.go3.lt/wp-content/uploads/2024/03/Go3_white.svg (Go3, official logo; also img/tiles/go3.svg)',
+    '- fastlink-tv-icon.png: Fastlink TV app icon, supplied by hand; img/tiles/fastlink.png is its white logo cut out onto transparency',
+    '- teliaplay-logo.png: Telia Play logo, supplied by hand; img/tiles/teliaplay.png is its play-button pebble'
+);
 await writeFile(resolve(src, 'img/marks/SOURCES.md'), lines.join('\n') + '\n');
 
 for (const [name, url] of Object.entries(fonts)) {

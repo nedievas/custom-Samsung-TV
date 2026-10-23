@@ -1,7 +1,8 @@
 /*
  * Minimal fake of the Tizen APIs the launcher uses, for desktop-browser preview.
  * Does nothing when running on the TV.
- * The app ids below are illustrative; use "All apps" on the TV for real ones.
+ * The app names are the UE55MU6502's installed apps as its Smart Hub reports them; most ids are
+ * illustrative, so use "All apps" on the TV for real ones.
  */
 (function () {
     'use strict';
@@ -14,22 +15,21 @@
 
     var apps = [
         app('Arn0Lnchr0.Launcher', 'Arn0 Launcher'),
-        app('xvvl3S1TT1.TizenTubeStandalone', 'TizenTube'),
-        app('com.samsung.tv.cobalt-yt', 'YouTube'),
+        app('111299001912', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
-        app('org.tizen.primevideo', 'Prime Video'),
+        app('Go3TvApp00.Go3', 'Go3'),
+        app('Viaplay000.Viaplay', 'Viaplay'),
         app('MCmYXNxgcu.DisneyPlus', 'Disney+'),
+        app('org.tizen.primevideo', 'Prime Video'),
+        app('AprZAARz4r.Jellyfin', 'Jellyfin'),
+        app('rJeHak5zRg.Spotify', 'Spotify - Music and Podcasts'),
         app('com.samsung.tv.aria-video', 'Apple TV'),
-        app('rJeHak5zRg.Spotify', 'Spotify'),
-        app('Jz7aUrV2Q4.Twitch', 'Twitch'),
-        app('E0P3lRI4H7.MYTF1', 'TF1+ : Streaming, TV en Direct'),
-        app('MovistarPl.MovistarPlus', 'Movistar Plus+'),
-        app('PlexMedia0.Plex', 'Plex'),
-        app('DaznApp000.DAZN', 'DAZN'),
-        app('RtveTvApp0.RTVEPlay', 'RTVE Play'),
-        app('Atresplay0.atresplayer', 'atresplayer'),
+        app('FastlinkTv.FastlinkTV', 'Fastlink.lt TV'),
         app('org.tizen.browser', 'Internet'),
+        app('PlexMedia0.Plex', 'Plex'),
+        app('RakutenTv0.RakutenTV', 'Rakuten TV'),
         // Noise that the consumer filter should hide
+        app('tv6pbVMQFF.PrivacyChoices', 'Privacy Choices'),
         app('com.samsung.tv.ep-dataservice-app', 'ep-dataservice-app'),
         app('adplatform.ADPlayer', 'ADPlayer'),
         app('com.samsung.tv.store', 'Apps'),
