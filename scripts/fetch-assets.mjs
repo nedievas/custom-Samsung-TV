@@ -24,15 +24,18 @@ const marks = {
     xbox: CBI + 'xbox.svg'
 };
 
-// All SIL Open Font License.
-const FS = 'https://cdn.jsdelivr.net/npm/@fontsource-variable/';
-const fonts = {
-    'manrope.woff2': FS + 'manrope@5.1.0/files/manrope-latin-wght-normal.woff2',
-    'inter.woff2': FS + 'inter@5.1.0/files/inter-latin-wght-normal.woff2',
-    'outfit.woff2': FS + 'outfit@5.1.0/files/outfit-latin-wght-normal.woff2',
-    'dm-sans.woff2': FS + 'dm-sans@5.1.0/files/dm-sans-latin-wght-normal.woff2',
-    'OFL.txt': FS + 'manrope@5.1.0/LICENSE'
-};
+/*
+ * Manrope, SIL Open Font License. One static file per weight rather than the variable font:
+ * the 2017 TV's engine predates variable fonts and would draw everything at the file's default
+ * weight, which for Manrope is 200. Latin-ext carries the Lithuanian letters (ą č ę ė į š ų ū ž).
+ */
+const FS = 'https://cdn.jsdelivr.net/npm/@fontsource/manrope@5.1.0/';
+const fonts = { 'OFL.txt': FS + 'LICENSE' };
+for (const weight of [300, 400, 500, 600, 700, 800]) {
+    for (const subset of ['latin', 'latin-ext']) {
+        fonts[`manrope-${subset}-${weight}.woff2`] = FS + `files/manrope-${subset}-${weight}-normal.woff2`;
+    }
+}
 
 const src = resolve(import.meta.dirname, '..', 'src');
 

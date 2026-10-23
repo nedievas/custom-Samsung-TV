@@ -35,6 +35,7 @@ window.LAUNCHER_CONFIG = {
     //   'inapp'          show the input full screen inside the launcher (Back returns)
     inputMethod: 'switch+viewer',
 
+    // Language of the date and the weather words: 'en-GB' or 'lt-LT'.
     locale: 'en-GB',
 
     theme: {

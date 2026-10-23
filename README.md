@@ -124,7 +124,7 @@ accident while sweeping along a row.
 src/                  everything that goes into the .wgt
   config.xml          Tizen manifest (app id, privileges)
   css/style.css       1920x1080 stage; performance rules measured, not assumed (see its header)
-  fonts/              Manrope, Inter, Outfit, DM Sans (OFL), bundled so nothing loads from the network
+  fonts/              Manrope (OFL) in static weights with Lithuanian letters, bundled so nothing loads from the network
   img/marks/          brand marks (Simple Icons CC0, Custom Brand Icons MIT; see SOURCES.md)
   img/tiles/          marks recoloured per brand (generated at build)
   img/wallpapers/     1920x1080 wallpapers with the readability scrim baked in (generated)
@@ -135,7 +135,8 @@ src/                  everything that goes into the .wgt
   js/inputs.js        HDMI via tizen.systeminfo + tizen.tvwindow
   js/wallpaper.js     wallpaper display and rotation
   js/screensaver.js   idle screen saver: photos, slow zoom, clock
-  js/appearance.js    clock, date and font settings
+  js/appearance.js    clock and date settings
+  js/i18n.js          interface text in English or Lithuanian (Lab and the hidden game stay English)
   js/weather.js       Open-Meteo reading for the screen saver corner
   js/prefs.js         settings saved on the TV
   js/ui.js            screens, focus, keys, toast, pop-up menu
@@ -160,8 +161,8 @@ Saved on the TV in `localStorage`. They survive restarts and in-place updates, n
 - **Apps on Home** — OK on an app opens Move / Remove; OK on the right-hand slot adds one.
 - **Consoles** — per console: rename (on-screen keyboard), HDMI port, logo, how it opens, hide,
   reorder, remove; plus add a console.
-- **Appearance** — 24/12-hour clock, date shown/hidden, date language (English, Español, Français),
-  font, app names (always / when selected / never).
+- **Appearance** — 24/12-hour clock, date shown/hidden, language (English, Lietuvių) for the whole
+  interface, app names (always / when selected / never).
 - **Navigation sound** — turn arrow-key sounds on or off, choose Soft, Warm or Bright, and preview
   the selected tone.
 - **Screen saver** — on or off, start after 3/5/10/15 min idle on Home, photo change every

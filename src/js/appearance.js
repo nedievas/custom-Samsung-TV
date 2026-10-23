@@ -1,29 +1,22 @@
-/* Clock, date and font settings (Prefs.appearance). */
+/* Clock and date settings (Prefs.appearance). The font is fixed: Manrope, set in css/style.css. */
 (function () {
     'use strict';
 
-    var FONTS = [
-        { key: 'manrope', label: 'Manrope', family: '"Manrope"' },
-        { key: 'inter', label: 'Inter', family: '"Inter"' },
-        { key: 'outfit', label: 'Outfit', family: '"Outfit"' },
-        { key: 'dm-sans', label: 'DM Sans', family: '"DM Sans"' }
-    ];
-
+    // shortMonth is the month style for the screen saver's short date. Lithuanian has no
+    // abbreviated month names, so 'short' comes out as digits ("10-23, pn").
     var LOCALES = [
-        { key: 'en-GB', label: 'English' },
-        { key: 'es-ES', label: 'Español' },
-        { key: 'fr-FR', label: 'Français' }
+        { key: 'en-GB', label: 'English', shortMonth: 'short' },
+        { key: 'lt-LT', label: 'Lietuvių', shortMonth: 'long' }
     ];
-
-    var FALLBACK = ', "SamsungOne", "Helvetica Neue", Arial, sans-serif';
 
     function prefs() { return Prefs.get().appearance; }
 
-    function font(key) {
-        return FONTS.find(function (f) { return f.key === key; }) || FONTS[0];
+    function locale(key) {
+        return LOCALES.find(function (l) { return l.key === key; }) || LOCALES[0];
     }
 
-    function pad(n) { return String(n).padStart(2, '0'); }
+    // Not String.prototype.padStart: the 2017 TV's engine (about Chromium 47) predates it.
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
 
     // Returns { time: '16:05', suffix: '' } or { time: '4:05', suffix: 'PM' }.
     function time(d) {
@@ -36,7 +29,7 @@
 
     function date(d) {
         try {
-            var text = d.toLocaleDateString(prefs().locale, { weekday: 'long', day: 'numeric', month: 'long' });
+            var text = d.toLocaleDateString(locale(prefs().locale).key, { weekday: 'long', day: 'numeric', month: 'long' });
             return text.charAt(0).toUpperCase() + text.slice(1);
         } catch (e) {
             return d.toDateString();
@@ -45,17 +38,16 @@
 
     function apply() {
         var p = prefs();
-        document.documentElement.style.setProperty('--font', font(p.font).family + FALLBACK);
         var home = document.getElementById('home');
         home.classList.toggle('names-focused', p.names === 'focused');
         home.classList.toggle('names-never', p.names === 'never');
         home.classList.toggle('no-date', !p.showDate);
+        I18n.apply();
     }
 
     window.Appearance = {
-        FONTS: FONTS,
         LOCALES: LOCALES,
-        font: font,
+        locale: locale,
         time: time,
         date: date,
         apply: apply

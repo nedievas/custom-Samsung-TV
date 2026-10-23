@@ -189,8 +189,9 @@
     // The design asks for "Wed 21 Oct"; Appearance.date is the long form Home uses.
     function shortDate(d) {
         try {
-            var text = d.toLocaleDateString(Prefs.get().appearance.locale,
-                { weekday: 'short', day: 'numeric', month: 'short' });
+            var locale = Appearance.locale(Prefs.get().appearance.locale);
+            var text = d.toLocaleDateString(locale.key,
+                { weekday: 'short', day: 'numeric', month: locale.shortMonth });
             return text.charAt(0).toUpperCase() + text.slice(1);
         } catch (e) {
             return d.toDateString();
@@ -210,7 +211,7 @@
     }
 
     function caption(w) {
-        $('ss-title').textContent = w ? w.title : '';
+        $('ss-title').textContent = w ? I18n.t(w.title) : '';
         $('ss-caption').classList.toggle('hidden', !w);
     }
 

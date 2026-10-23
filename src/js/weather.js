@@ -42,13 +42,9 @@
             clear: 'Clear', cloudy: 'Cloudy', fog: 'Fog', drizzle: 'Drizzle',
             rain: 'Rain', showers: 'Showers', snow: 'Snow', storm: 'Thunderstorm'
         },
-        'es-ES': {
-            clear: 'Despejado', cloudy: 'Nublado', fog: 'Niebla', drizzle: 'Llovizna',
-            rain: 'Lluvia', showers: 'Chubascos', snow: 'Nieve', storm: 'Tormenta'
-        },
-        'fr-FR': {
-            clear: 'Dégagé', cloudy: 'Nuageux', fog: 'Brouillard', drizzle: 'Bruine',
-            rain: 'Pluie', showers: 'Averses', snow: 'Neige', storm: 'Orage'
+        'lt-LT': {
+            clear: 'Giedra', cloudy: 'Debesuota', fog: 'Rūkas', drizzle: 'Dulksna',
+            rain: 'Lietus', showers: 'Trumpas lietus', snow: 'Sniegas', storm: 'Perkūnija'
         }
     };
 

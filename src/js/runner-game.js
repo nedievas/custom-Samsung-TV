@@ -110,7 +110,7 @@
             ctx.fillRect(x, ground + 62 + (i % 3) * 23, 72, 5);
         }
         text('CAMILLE: THE RUNAWAY BRIDE', 120, 125, 28, 'rgba(255,255,255,.72)', 'left', 700);
-        text(String(Math.floor(score)).padStart(5, '0'), 1800, 130, 44, '#fff', 'right', 700);
+        text(('0000' + Math.floor(score)).slice(-5), 1800, 130, 44, '#fff', 'right', 700);
 
         drawCamille(ground - jumpY);
         obstacles.forEach(function (o) {

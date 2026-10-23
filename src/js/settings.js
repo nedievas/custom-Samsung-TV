@@ -90,7 +90,7 @@
         DevLog.log('Open Samsung Home');
         Apps.launch(SAMSUNG_HOME).catch(function (err) {
             DevLog.log('Samsung Home failed: ' + DevLog.errorText(err));
-            UI.toast('Could not open Samsung Home: ' + DevLog.errorText(err));
+            UI.toast(I18n.t('Could not open Samsung Home: {error}', { error: DevLog.errorText(err) }));
         }).then(function () { opening = false; });
     }
 
@@ -98,31 +98,33 @@
 
     function wallpaperSummary() {
         var p = Prefs.get().wallpaper;
-        if (p.mode === 'off') return 'Off';
-        if (p.mode === 'rotate') return 'Rotate · ' + Wallpaper.interval(p.interval).label.toLowerCase();
+        if (p.mode === 'off') return I18n.t('Off');
+        if (p.mode === 'rotate') return I18n.t('Rotate · {interval}', { interval: I18n.t(Wallpaper.interval(p.interval).label).toLowerCase() });
         var w = Wallpaper.find(p.photo);
-        return w ? w.title : 'Photo';
+        return I18n.t(w ? w.title : 'Photo');
     }
 
     function overviewEntries() {
         var a = Prefs.get().appearance;
         var shown = Home.inputs().filter(function (i) { return !i.hidden; }).length;
+        var t = I18n.t;
         return [
-            { label: 'Background', value: wallpaperSummary(), run: function () { UI.show('bg'); } },
-            { label: 'Apps on Home', value: Home.homeItems().length + ' apps', run: function () { UI.show('homeapps'); } },
-            { label: 'Consoles', value: shown + ' on Home', run: function () { UI.show('consoles'); } },
-            { label: 'Appearance', value: Appearance.font(a.font).label + ' · ' + (a.clock === '12h' ? '12-hour' : '24-hour'), run: function () { UI.show('appearance'); } },
-            { label: 'Navigation sound', value: soundSummary(), run: function () { UI.show('sound-settings'); } },
-            { label: 'Screen saver', value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
-            { label: 'Samsung Home', value: 'Smart Hub and TV settings', run: openSamsungHome },
-            { label: 'Advanced', value: 'Refresh, reset, Lab', run: function () { UI.show('advanced'); } }
+            { label: t('Background'), value: wallpaperSummary(), run: function () { UI.show('bg'); } },
+            { label: t('Apps on Home'), value: t('{n} apps', { n: Home.homeItems().length }), run: function () { UI.show('homeapps'); } },
+            { label: t('Consoles'), value: t('{n} on Home', { n: shown }), run: function () { UI.show('consoles'); } },
+            { label: t('Appearance'), value: t(a.clock === '12h' ? '12-hour' : '24-hour') + ' · ' + Appearance.locale(a.locale).label, run: function () { UI.show('appearance'); } },
+            { label: t('Navigation sound'), value: soundSummary(), run: function () { UI.show('sound-settings'); } },
+            { label: t('Screen saver'), value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
+            { label: t('Samsung Home'), value: t('Smart Hub and TV settings'), run: openSamsungHome },
+            { label: t('Advanced'), value: t('Refresh, reset, Lab'), run: function () { UI.show('advanced'); } }
         ];
     }
 
     // ---------- Chips (Background, Appearance)
 
+    // Chip labels are all fixed option names; numbers such as '5 min' have no entry and pass through.
     function chip(label, on, item) {
-        var c = el('div', 'chip' + (on ? ' on' : ''), label);
+        var c = el('div', 'chip' + (on ? ' on' : ''), I18n.t(label));
         c._item = item;
         return c;
     }
@@ -164,7 +166,7 @@
             var img = new Image();
             img.src = w.thumb;
             t.appendChild(img);
-            t.appendChild(el('div', 'thumb-title', w.title));
+            t.appendChild(el('div', 'thumb-title', I18n.t(w.title)));
             t._item = { kind: 'photo', key: w.key };
             photos.appendChild(t);
         });
@@ -194,8 +196,7 @@
         return [
             { title: 'Clock', key: 'clock', options: [['24h', '24-hour'], ['12h', '12-hour']] },
             { title: 'Date', key: 'showDate', options: [[true, 'Show'], [false, 'Hide']] },
-            { title: 'Date language', key: 'locale', options: Appearance.LOCALES.map(function (l) { return [l.key, l.label]; }) },
-            { title: 'Font', key: 'font', options: Appearance.FONTS.map(function (f) { return [f.key, f.label, f.family]; }) },
+            { title: 'Language', key: 'locale', options: Appearance.LOCALES.map(function (l) { return [l.key, l.label]; }) },
             { title: 'App names', key: 'names', options: [['always', 'Always'], ['focused', 'When selected'], ['never', 'Never']] }
         ];
     }
@@ -206,12 +207,10 @@
         body.innerHTML = '';
         appearanceBlocks().forEach(function (b) {
             var block = el('div', 'setting-block');
-            block.appendChild(el('h2', '', b.title));
+            block.appendChild(el('h2', '', I18n.t(b.title)));
             var chips = el('div', 'chips');
             b.options.forEach(function (o) {
-                var c = chip(o[1], p[b.key] === o[0], { key: b.key, value: o[0] });
-                if (o[2]) c.style.fontFamily = o[2];
-                chips.appendChild(c);
+                chips.appendChild(chip(o[1], p[b.key] === o[0], { key: b.key, value: o[0] }));
             });
             block.appendChild(chips);
             body.appendChild(block);
@@ -224,6 +223,7 @@
         Appearance.apply();
         Home.updateClock();
         renderAppearance();
+        UI.refreshHints();
         UI.refresh();
     }
 
@@ -231,7 +231,7 @@
 
     function soundSummary() {
         var p = Prefs.get().sound;
-        return p.enabled ? 'On · ' + Sound.presetLabel() : 'Off';
+        return p.enabled ? I18n.t('On') + ' · ' + I18n.t(Sound.presetLabel()) : I18n.t('Off');
     }
 
     function renderSound() {
@@ -240,7 +240,7 @@
         body.innerHTML = '';
 
         var enabledBlock = el('div', 'setting-block');
-        enabledBlock.appendChild(el('h2', '', 'Sound'));
+        enabledBlock.appendChild(el('h2', '', I18n.t('Sound')));
         var enabledChips = el('div', 'chips');
         enabledChips.appendChild(chip('On', p.enabled, { kind: 'enabled', value: true }));
         enabledChips.appendChild(chip('Off', !p.enabled, { kind: 'enabled', value: false }));
@@ -248,7 +248,7 @@
         body.appendChild(enabledBlock);
 
         var presetBlock = el('div', 'setting-block');
-        presetBlock.appendChild(el('h2', '', 'Style'));
+        presetBlock.appendChild(el('h2', '', I18n.t('Style')));
         var presetChips = el('div', 'chips');
         Sound.presetOptions().forEach(function (preset) {
             presetChips.appendChild(chip(preset.label, p.preset === preset.key,
@@ -258,7 +258,7 @@
         body.appendChild(presetBlock);
 
         var previewBlock = el('div', 'setting-block');
-        previewBlock.appendChild(el('h2', '', 'Try it'));
+        previewBlock.appendChild(el('h2', '', I18n.t('Try it')));
         var previewChips = el('div', 'chips');
         previewChips.appendChild(chip('Preview selected sound', false, { kind: 'preview' }));
         previewBlock.appendChild(previewChips);
@@ -290,7 +290,7 @@
 
     function screensaverSummary() {
         var p = Prefs.get().screensaver;
-        return p.enabled ? 'After ' + Screensaver.delay().label : 'Off';
+        return p.enabled ? I18n.t('After {delay}', { delay: I18n.t(Screensaver.delay().label) }) : I18n.t('Off');
     }
 
     /*
@@ -319,7 +319,7 @@
         body.innerHTML = '';
         screensaverBlocks().forEach(function (b) {
             var block = el('div', 'setting-block');
-            block.appendChild(el('h2', '', b.title));
+            block.appendChild(el('h2', '', I18n.t(b.title)));
             var chips = el('div', 'chips');
             b.options.forEach(function (o) {
                 chips.appendChild(chip(o[1], p[b.key] === o[0], { key: b.key, value: o[0] }));
@@ -329,7 +329,7 @@
         });
 
         var tryBlock = el('div', 'setting-block');
-        tryBlock.appendChild(el('h2', '', 'Try it'));
+        tryBlock.appendChild(el('h2', '', I18n.t('Try it')));
         var tryChips = el('div', 'chips');
         tryChips.appendChild(chip('Show it now', false, { kind: 'preview' }));
         tryBlock.appendChild(tryChips);
@@ -375,8 +375,8 @@
         var other = $('ed-other');
         other.innerHTML = '';
         ed.others.forEach(function (item) { other.appendChild(edRow(item, false)); });
-        $('ed-home-title').textContent = 'On Home · ' + ed.items.length;
-        $('ed-other-title').textContent = 'Add apps · ' + ed.others.length;
+        $('ed-home-title').textContent = I18n.t('On Home · {n}', { n: ed.items.length });
+        $('ed-other-title').textContent = I18n.t('Add apps · {n}', { n: ed.others.length });
         if (!ed.others.length) ed.col = 0;
     }
 
@@ -447,7 +447,7 @@
                 ed.items.push(added);
                 edSave();
                 edRender();
-                UI.toast('Added ' + added.label + ' to Home');
+                UI.toast(I18n.t('Added {name} to Home', { name: added.label }));
             }
             edRefresh();
             return true;
@@ -461,7 +461,7 @@
         if (!item) return;
         UI.menu(item.label, [
             {
-                label: 'Move', run: function () {
+                label: I18n.t('Move'), run: function () {
                     ed.moving = i;
                     ed.snapshot = ed.items.slice();
                     edRender();
@@ -469,9 +469,9 @@
                 }
             },
             {
-                label: 'Remove from Home', run: function () {
+                label: I18n.t('Remove from Home'), run: function () {
                     if (ed.items.length <= 1) {
-                        UI.toast('Home needs at least one app');
+                        UI.toast(I18n.t('Home needs at least one app'));
                         return;
                     }
                     ed.items.splice(i, 1);
@@ -480,7 +480,7 @@
                     UI.refresh();
                 }
             },
-            { label: 'Cancel' }
+            { label: I18n.t('Cancel') }
         ]);
     }
 
@@ -511,12 +511,12 @@
         var entries = Home.inputs().map(function (input, i) {
             return {
                 label: input.label,
-                value: input.hidden ? 'Hidden' : 'HDMI ' + input.hdmi + ' · ' + methodOf(input).label,
+                value: input.hidden ? I18n.t('Hidden') : 'HDMI ' + input.hdmi + ' · ' + I18n.t(methodOf(input).label),
                 mini: Home.miniInputTile(input),
                 run: function () { consoleMenu(i); }
             };
         });
-        entries.push({ label: '+ Add a console', value: '', run: addConsole });
+        entries.push({ label: I18n.t('+ Add a console'), value: '', run: addConsole });
         return entries;
     }
 
@@ -532,17 +532,18 @@
         var c = Home.inputs()[i];
         var count = Home.inputs().length;
         var status = Home.hdmiStatus();
+        var t = I18n.t;
         var options = [
             {
-                label: 'Rename', run: function () {
+                label: t('Rename'), run: function () {
                     rename(c.label, function (name) { editInputs(function (l) { l[i].label = name; }); });
                 }
             },
             {
-                label: 'HDMI port · HDMI ' + c.hdmi, run: function () {
-                    UI.menu('HDMI port', [1, 2, 3, 4].map(function (n) {
+                label: t('HDMI port') + ' · HDMI ' + c.hdmi, run: function () {
+                    UI.menu(t('HDMI port'), [1, 2, 3, 4].map(function (n) {
                         return {
-                            label: 'HDMI ' + n + (status[n] ? ' · connected' : ''),
+                            label: 'HDMI ' + n + (status[n] ? ' · ' + t('connected') : ''),
                             checked: n === c.hdmi,
                             run: function () { editInputs(function (l) { l[i].hdmi = n; }); }
                         };
@@ -550,10 +551,10 @@
                 }
             },
             {
-                label: 'Logo · ' + logoOf(c).label, run: function () {
-                    UI.menu('Logo', LOGOS.map(function (logo) {
+                label: t('Logo') + ' · ' + t(logoOf(c).label), run: function () {
+                    UI.menu(t('Logo'), LOGOS.map(function (logo) {
                         return {
-                            label: logo.label,
+                            label: t(logo.label),
                             checked: logo.key === (c.brand || ''),
                             run: function () { editInputs(function (l) { l[i].brand = logo.key; }); }
                         };
@@ -561,10 +562,10 @@
                 }
             },
             {
-                label: 'Opens · ' + methodOf(c).label, run: function () {
-                    UI.menu('Opens', METHODS.map(function (m) {
+                label: t('Opens') + ' · ' + t(methodOf(c).label), run: function () {
+                    UI.menu(t('Opens'), METHODS.map(function (m) {
                         return {
-                            label: m.label + ' · ' + m.hint,
+                            label: t(m.label) + ' · ' + t(m.hint),
                             checked: m.key === methodOf(c).key,
                             run: function () { editInputs(function (l) { l[i].method = m.key; }); }
                         };
@@ -572,25 +573,25 @@
                 }
             },
             {
-                label: c.hidden ? 'Show on Home' : 'Hide from Home',
+                label: t(c.hidden ? 'Show on Home' : 'Hide from Home'),
                 run: function () { editInputs(function (l) { l[i].hidden = !c.hidden; }); }
             }
         ];
         if (i > 0) {
-            options.push({ label: 'Move earlier', run: function () { editInputs(function (l) { l.splice(i - 1, 0, l.splice(i, 1)[0]); }); } });
+            options.push({ label: t('Move earlier'), run: function () { editInputs(function (l) { l.splice(i - 1, 0, l.splice(i, 1)[0]); }); } });
         }
         if (i < count - 1) {
-            options.push({ label: 'Move later', run: function () { editInputs(function (l) { l.splice(i + 1, 0, l.splice(i, 1)[0]); }); } });
+            options.push({ label: t('Move later'), run: function () { editInputs(function (l) { l.splice(i + 1, 0, l.splice(i, 1)[0]); }); } });
         }
         options.push({
-            label: 'Remove', run: function () {
-                UI.menu('Remove ' + c.label + '?', [
-                    { label: 'Remove', run: function () { editInputs(function (l) { l.splice(i, 1); }); } },
-                    { label: 'Cancel' }
+            label: t('Remove'), run: function () {
+                UI.menu(t('Remove {name}?', { name: c.label }), [
+                    { label: t('Remove'), run: function () { editInputs(function (l) { l.splice(i, 1); }); } },
+                    { label: t('Cancel') }
                 ]);
             }
         });
-        options.push({ label: 'Cancel' });
+        options.push({ label: t('Cancel') });
         UI.menu(c.label, options);
     }
 
@@ -598,9 +599,10 @@
         var used = {};
         Home.inputs().forEach(function (i) { used[i.hdmi] = true; });
         var port = [1, 2, 3, 4].find(function (n) { return !used[n]; }) || 1;
-        editInputs(function (l) { l.push({ hdmi: port, label: 'Console', brand: '' }); });
+        var name = I18n.t('Console');
+        editInputs(function (l) { l.push({ hdmi: port, label: name, brand: '' }); });
         var index = Home.inputs().length - 1;
-        rename('Console', function (name) { editInputs(function (l) { l[index].label = name; }); });
+        rename(name, function (name) { editInputs(function (l) { l[index].label = name; }); });
     }
 
     // ---------- Rename dialog (uses Samsung's on-screen keyboard)
@@ -628,34 +630,34 @@
     function advancedEntries() {
         var entries = [
             {
-                label: 'Refresh app list', value: 'After installing or removing apps', run: function () {
-                    UI.toast('Refreshing the app list…');
-                    Home.reloadApps().then(function () { UI.toast('App list refreshed'); });
+                label: I18n.t('Refresh app list'), value: I18n.t('After installing or removing apps'), run: function () {
+                    UI.toast(I18n.t('Refreshing the app list…'));
+                    Home.reloadApps().then(function () { UI.toast(I18n.t('App list refreshed')); });
                 }
             }
         ];
         if (window.LAUNCHER_CONFIG.devLogUrl) {
             entries.push({
-                label: 'Export settings', value: 'Sends them to the Mac log', run: function () {
+                label: I18n.t('Export settings'), value: I18n.t('Sends them to the Mac log'), run: function () {
                     DevLog.log('Settings export', Prefs.get());
-                    UI.toast('Settings sent to the Mac log');
+                    UI.toast(I18n.t('Settings sent to the Mac log'));
                 }
             });
         }
         entries.push({
-            label: 'Reset all settings', value: 'Back to the defaults', run: function () {
-                UI.menu('Reset all settings?', [
+            label: I18n.t('Reset all settings'), value: I18n.t('Back to the defaults'), run: function () {
+                UI.menu(I18n.t('Reset all settings?'), [
                     {
-                        label: 'Reset', run: function () {
+                        label: I18n.t('Reset'), run: function () {
                             Prefs.reset();
                             location.reload();
                         }
                     },
-                    { label: 'Cancel' }
+                    { label: I18n.t('Cancel') }
                 ]);
             }
         });
-        entries.push({ label: 'Lab', value: 'Developer tests', run: function () { UI.show('lab'); } });
+        entries.push({ label: 'Lab', value: I18n.t('Developer tests'), run: function () { UI.show('lab'); } });
         return entries;
     }
 

@@ -70,8 +70,8 @@
         }
         list.forEach(function (h) {
             var group = el('div', 'hint');
-            group.appendChild(el('span', 'hint-key', h[0]));
-            group.appendChild(el('span', 'hint-label', h[1]));
+            group.appendChild(el('span', 'hint-key', I18n.t(h[0])));
+            group.appendChild(el('span', 'hint-label', I18n.t(h[1])));
             bar.appendChild(group);
         });
         bar.classList.remove('hidden');
