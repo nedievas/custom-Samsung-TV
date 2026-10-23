@@ -12,7 +12,7 @@ window.BRANDS = [
     { key: 'disneyplus', match: /disney/i, mark: 'disneyplus', bg: 'linear-gradient(135deg,#091550,#1f5bd8)', fg: '#fff' },
     { key: 'appletv', match: /apple ?tv|aria-video/i, mark: 'appletv', bg: '#1c1c1e', fg: '#fff' },
     { key: 'spotify', match: /spotify/i, mark: 'spotify', bg: '#121212', fg: '#1ed760' },
-    { key: 'plex', match: /plex/i, mark: 'plex', bg: '#1f1f1f', fg: '#e5a00d' },
+    { key: 'plex', match: /plex/i, mark: 'plex', bg: '#1f1f1f', fg: '#e5a00d', pad: [16, 12] },
     { key: 'jellyfin', match: /jellyfin/i, mark: 'jellyfin', bg: 'linear-gradient(135deg,#aa5cc3,#00a4dc)', fg: '#fff' },
     { key: 'viaplay', match: /viaplay/i, mark: 'viaplay', bg: '#1b1020', fg: '#fe365f' },
     { key: 'rakutentv', match: /rakuten/i, mark: 'rakuten', bg: '#bf0000', fg: '#fff' },

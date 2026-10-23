@@ -25,6 +25,11 @@ window.LAUNCHER_CONFIG = {
     // e.g. { hdmi: 2, label: 'PlayStation 4', brand: 'playstation' }; also editable on the TV.
     inputs: [],
 
+    // Apps to leave out of All apps and the Home editor, as case-insensitive patterns on name or
+    // id: for preinstalled apps the TV will not let you delete. Only a default: once an app is
+    // hidden or shown on the TV (Settings ▸ Hidden apps), the TV's list wins. Yellow shows all.
+    hiddenApps: [],
+
     // How an input tile switches the TV. See README "HDMI inputs".
     //   'switch+viewer'  set the TV source, then open Samsung's TV viewer (default)
     //   'switch'         only set the TV source

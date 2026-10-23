@@ -34,7 +34,8 @@
                 names: 'always'         // app names under tiles: 'always' | 'focused' | 'never'
             },
             home: null,                 // [{ id, label, brand }] once edited; null = config.js apps
-            inputs: null                // [{ hdmi, label, brand, method, hidden }] once edited; null = config.js
+            inputs: null,               // [{ hdmi, label, brand, method, hidden }] once edited; null = config.js
+            hidden: null                // [app id] once an app is hidden or shown on the TV; null = config.js
         };
     }
 
@@ -56,6 +57,7 @@
                 merge(prefs.appearance, saved.appearance);
                 if (Array.isArray(saved.home) && saved.home.length) prefs.home = saved.home;
                 if (Array.isArray(saved.inputs)) prefs.inputs = saved.inputs;
+                if (Array.isArray(saved.hidden)) prefs.hidden = saved.hidden;
             }
         } catch (e) {
             // Unreadable storage: run with defaults.

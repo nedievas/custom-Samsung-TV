@@ -120,6 +120,14 @@
         'Remove from Home': 'Pašalinti iš pradžios',
         'Home needs at least one app': 'Pradžioje turi likti bent viena programa',
 
+        // Hidden apps
+        'Hidden apps': 'Paslėptos programos',
+        'Hide app': 'Slėpti programą',
+        'Show again': 'Rodyti vėl',
+        '{name} is hidden': '{name} paslėpta',
+        '{name} is shown again': '{name} vėl rodoma',
+        'No hidden apps': 'Paslėptų programų nėra',
+
         // Consoles
         'Hidden': 'Paslėpta',
         'TV input': 'TV įvestis',

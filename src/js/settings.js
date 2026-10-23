@@ -96,12 +96,44 @@
         return [
             { label: t('Background'), value: wallpaperSummary(), run: function () { UI.show('bg'); } },
             { label: t('Apps on Home'), value: t('{n} apps', { n: Home.homeItems().length }), run: function () { UI.show('homeapps'); } },
+            { label: t('Hidden apps'), value: hiddenSummary(), run: function () { UI.show('hiddenapps'); } },
             { label: t('Consoles'), value: t('{n} on Home', { n: shown }), run: function () { UI.show('consoles'); } },
             { label: t('Appearance'), value: t(a.clock === '12h' ? '12-hour' : '24-hour') + ' · ' + Appearance.locale(a.locale).label, run: function () { UI.show('appearance'); } },
             { label: t('Navigation sound'), value: soundSummary(), run: function () { UI.show('sound-settings'); } },
             { label: t('Screen saver'), value: screensaverSummary(), run: function () { UI.show('screensaver-settings'); } },
             { label: t('Advanced'), value: t('Refresh, reset, Lab'), run: function () { UI.show('advanced'); } }
         ];
+    }
+
+    // ---------- Hidden apps
+
+    var renderHidden = null;
+
+    function hiddenSummary() {
+        var n = Apps.hiddenItems(Home.apps()).length;
+        return n ? I18n.t('{n} apps', { n: n }) : I18n.t('None');
+    }
+
+    function hiddenEntries() {
+        var items = Apps.hiddenItems(Home.apps());
+        if (!items.length) return [{ label: I18n.t('No hidden apps'), value: '', run: function () {} }];
+        return items.map(function (item) {
+            return {
+                label: item.label,
+                mini: Home.miniTile(item),
+                run: function () {
+                    Apps.setHidden(Home.apps(), item.id, false);
+                    renderHidden();
+                    UI.refresh();
+                    UI.toast(I18n.t('{name} is shown again', { name: item.label }));
+                }
+            };
+        });
+    }
+
+    function hideApp(item) {
+        Apps.setHidden(Home.apps(), item.id, true);
+        UI.toast(I18n.t('{name} is hidden', { name: item.label }));
     }
 
     // ---------- Chips (Background, Appearance)
@@ -427,11 +459,7 @@
                     edMenu();
                 }
             } else if (ed.others.length) {
-                var added = ed.others[ed.idx[1]];
-                ed.items.push(added);
-                edSave();
-                edRender();
-                UI.toast(I18n.t('Added {name} to Home', { name: added.label }));
+                edAddMenu();
             }
             edRefresh();
             return true;
@@ -460,6 +488,46 @@
                     }
                     ed.items.splice(i, 1);
                     edSave();
+                    edRender();
+                    UI.refresh();
+                }
+            },
+            {
+                label: I18n.t('Hide app'), run: function () {
+                    if (ed.items.length <= 1) {
+                        UI.toast(I18n.t('Home needs at least one app'));
+                        return;
+                    }
+                    ed.items.splice(i, 1);
+                    hideApp(item);
+                    edSave();
+                    edRender();
+                    UI.refresh();
+                }
+            },
+            { label: I18n.t('Cancel') }
+        ]);
+    }
+
+    // OK on an app that is not on Home. The menu returns to the editor before running the choice,
+    // so each choice re-renders.
+    function edAddMenu() {
+        var item = ed.others[ed.idx[1]];
+        if (!item) return;
+        UI.menu(item.label, [
+            {
+                label: I18n.t('Add to Home'), run: function () {
+                    ed.items.push(item);
+                    edSave();
+                    edRender();
+                    UI.refresh();
+                    UI.toast(I18n.t('Added {name} to Home', { name: item.label }));
+                }
+            },
+            {
+                label: I18n.t('Hide app'), run: function () {
+                    hideApp(item);
+                    edLoad();
                     edRender();
                     UI.refresh();
                 }
@@ -653,6 +721,7 @@
         registerList('advanced', advancedEntries, [['OK', 'Run'], ['Back', 'Settings']]);
         renderConsoles = registerList('consoles', consoleEntries,
             [['OK', 'Options'], ['Back', 'Settings']]);
+        renderHidden = registerList('hiddenapps', hiddenEntries, [['OK', 'Show again'], ['Back', 'Settings']]);
 
         UI.register('bg', {
             el: $('bg-settings'),
@@ -705,7 +774,7 @@
                     return [['▲ ▼', 'Reorder'], ['OK', 'Drop here'], ['Back', 'Cancel']];
                 }
                 return [
-                    ['OK', ed.col === 0 ? 'Options' : 'Add to Home'],
+                    ['OK', 'Options'],
                     ['◀ ▶', 'Switch column'],
                     ['Back', 'Settings']
                 ];
@@ -741,6 +810,10 @@
             if (UI.isVisible('homeapps') && ed.moving < 0) {
                 edLoad();
                 edRender();
+                UI.refresh();
+            }
+            if (UI.isVisible('hiddenapps')) {
+                renderHidden();
                 UI.refresh();
             }
         });

@@ -42,6 +42,10 @@ consoles and on which HDMI ports, how an input tile switches the TV, the locale,
 wallpaper. Most of it is also editable from the launcher's own Settings once it is on the TV, and
 the TV's copy wins (`config.js` only supplies the defaults).
 
+`hiddenApps` leaves apps out of All apps and the Home editor, for the preinstalled ones the TV
+will not let you delete. It is only a default: apps can be hidden and shown again on the TV, and the
+TV's list then wins. Yellow in All apps still shows everything.
+
 Beyond config: tile colours and brand marks in [`src/js/brands.js`](src/js/brands.js), the whole
 look in [`src/css/style.css`](src/css/style.css), the interface text in
 [`src/js/i18n.js`](src/js/i18n.js), and your own photos as wallpapers.
@@ -135,7 +139,9 @@ Saved on the TV in `localStorage`. They survive restarts and in-place updates, n
 
 - **Background** — Off (plain gradient), one photo, or rotate: on each Home, 30 s, 5 min, 15 min,
   1 hour, daily.
-- **Apps on Home** — OK on an app opens Move / Remove; OK on the right-hand slot adds one.
+- **Apps on Home** — OK on an app on Home opens Move / Remove / Hide; OK on one in the right-hand
+  column opens Add to Home / Hide.
+- **Hidden apps** — apps left out of All apps and the editor; OK shows one again.
 - **Consoles** — per console: rename (on-screen keyboard), HDMI port, logo, how it opens, hide,
   reorder, remove; plus add a console.
 - **Appearance** — 24/12-hour clock, date shown/hidden, language (English, Lietuvių) for the whole

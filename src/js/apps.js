@@ -106,9 +106,40 @@
         return apps.filter(function (a) { return best[shortName(a.name).toLowerCase()] === a; });
     }
 
-    // showEverything (Yellow) lists every visible app, duplicates included, for finding things.
+    /*
+     * Hidden apps: the TV's own list once anything has been hidden or shown there (Settings ▸
+     * Hidden apps, or the Apps on Home editor), otherwise config.hiddenApps, name/id patterns for
+     * apps the TV will not let you delete. Same rule as the Home row: config supplies the default.
+     */
+    function isHidden(app) {
+        var saved = Prefs.get().hidden;
+        if (saved) return saved.indexOf(app.id) >= 0;
+        return (window.LAUNCHER_CONFIG.hiddenApps || []).some(function (p) {
+            var re = new RegExp(p, 'i');
+            return re.test(app.name) || re.test(app.id);
+        });
+    }
+
+    function hiddenItems(apps) {
+        return apps
+            .filter(function (a) { return isConsumer(a) && isHidden(a); })
+            .map(function (a) { return toItem(a, {}); })
+            .sort(function (x, y) { return x.label.localeCompare(y.label); });
+    }
+
+    // The first change copies whatever config hides into the TV's list, which wins from then on.
+    function setHidden(apps, id, hide) {
+        var ids = apps.filter(isHidden).map(function (a) { return a.id; })
+            .filter(function (x) { return x !== id; });
+        if (hide) ids.push(id);
+        Prefs.get().hidden = ids;
+        Prefs.save();
+    }
+
+    // showEverything (Yellow) lists every visible app, duplicates and hidden ones included.
     function allSorted(apps, showEverything) {
-        var list = showEverything ? apps.filter(function (a) { return a.show; }) : onePerName(apps.filter(isConsumer));
+        var list = showEverything ? apps.filter(function (a) { return a.show; })
+            : onePerName(apps.filter(function (a) { return isConsumer(a) && !isHidden(a); }));
         return list
             .map(function (a) { return toItem(a, {}); })
             .sort(function (x, y) { return x.label.localeCompare(y.label); });
@@ -143,6 +174,8 @@
         launchable: launchable,
         curated: curated,
         allSorted: allSorted,
+        hiddenItems: hiddenItems,
+        setHidden: setHidden,
         describe: describe,
         launch: launch,
         withTimeout: withTimeout

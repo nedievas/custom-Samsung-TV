@@ -30,6 +30,8 @@
         app('org.tizen.browser', 'Internet'),
         app('kIciSQlYEM.plex', 'Plex'),
         app('vbUQClczfR.Wuakitv', 'Rakuten TV'),
+        app('BEd6UQZYva.mggtizen', 'MEGOGO: TV, Movies, Sports'),
+        app('FyObqYlHVG.SWEETTV', 'SWEET.TV'),
         // Noise that the consumer filter should hide
         app('jLU2jKvbyN.PrivacyChoices', 'Privacy Choices'),
         app('com.samsung.tv.ep-dataservice-app', 'ep-dataservice-app'),
