@@ -5,8 +5,7 @@
 (function () {
     'use strict';
 
-    var KEY = 'arn0.prefs.v1';
-    var LEGACY_WALLPAPER_KEY = 'arn0.wallpaper';
+    var KEY = 'tvlauncher.prefs.v1';
 
     function defaults() {
         var cfg = window.LAUNCHER_CONFIG || {};
@@ -57,17 +56,9 @@
                 merge(prefs.appearance, saved.appearance);
                 if (Array.isArray(saved.home) && saved.home.length) prefs.home = saved.home;
                 if (Array.isArray(saved.inputs)) prefs.inputs = saved.inputs;
-            } else {
-                var legacy = localStorage.getItem(LEGACY_WALLPAPER_KEY);
-                if (legacy) prefs.wallpaper.photo = legacy;
             }
         } catch (e) {
             // Unreadable storage: run with defaults.
-        }
-        // "Midnight" used to be a photo; it is now what Off shows.
-        if (prefs.wallpaper.photo === 'midnight') {
-            if (prefs.wallpaper.mode === 'photo') prefs.wallpaper.mode = 'off';
-            prefs.wallpaper.photo = 'forest';
         }
         return prefs;
     }
@@ -87,7 +78,6 @@
     function reset() {
         try {
             localStorage.removeItem(KEY);
-            localStorage.removeItem(LEGACY_WALLPAPER_KEY);
         } catch (e) {
             // Nothing stored, nothing to clear.
         }

@@ -13,7 +13,7 @@
 (function () {
     'use strict';
 
-    var STORE_KEY = 'arn0.weather.v1';
+    var STORE_KEY = 'tvlauncher.weather.v1';
     var ENDPOINT = 'https://api.open-meteo.com/v1/forecast';
     var FRESH_MS = 60 * 60 * 1000;          // inside the hour, the cached reading will do
     var USABLE_MS = 3 * 60 * 60 * 1000;     // older than this counts as no reading at all

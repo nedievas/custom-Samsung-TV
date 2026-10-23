@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-    var CACHE_KEY = 'arn0.apps.v1';
+    var CACHE_KEY = 'tvlauncher.apps.v1';
     var REFRESH_AFTER_MS = 5 * 60 * 1000;
     var GRID_COLS = 5;
 

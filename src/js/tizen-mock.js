@@ -14,7 +14,7 @@
     }
 
     var apps = [
-        app('Arn0Lnchr0.Launcher', 'Arn0 Launcher'),
+        app('TvLauncher.Launcher', 'TV Launcher'),
         app('111299001912', 'YouTube'),
         app('org.tizen.netflix-app', 'Netflix'),
         app('Go3TvApp00.Go3', 'Go3'),
@@ -57,7 +57,7 @@
                 later(ok);
             },
             getCurrentApplication: function () {
-                return { appInfo: { id: 'Arn0Lnchr0.Launcher' }, exit: function () {}, hide: function () {} };
+                return { appInfo: { id: 'TvLauncher.Launcher' }, exit: function () {}, hide: function () {} };
             }
         },
         systeminfo: {

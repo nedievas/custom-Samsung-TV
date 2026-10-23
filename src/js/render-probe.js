@@ -7,7 +7,7 @@
  * Each probe builds a full-screen stage, walks a focus ring along a row of tiles the way Home
  * does, and records requestAnimationFrame deltas. Moving the ring invalidates two tiles per
  * frame, so the cost of whatever those tiles carry (a blurred shadow, a gradient behind them)
- * shows up in the frame times. Results go to the log, and to the Mac if devLogUrl is set.
+ * shows up in the frame times. Results go to the log, and to your computer if devLogUrl is set.
  *
  * Lab screen only; nothing here runs during normal use.
  */

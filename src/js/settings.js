@@ -639,9 +639,9 @@
         ];
         if (window.LAUNCHER_CONFIG.devLogUrl) {
             entries.push({
-                label: I18n.t('Export settings'), value: I18n.t('Sends them to the Mac log'), run: function () {
+                label: I18n.t('Export settings'), value: I18n.t('Sends them to the log on your computer'), run: function () {
                     DevLog.log('Settings export', Prefs.get());
-                    UI.toast(I18n.t('Settings sent to the Mac log'));
+                    UI.toast(I18n.t('Settings sent to your computer'));
                 }
             });
         }

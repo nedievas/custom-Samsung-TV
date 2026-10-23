@@ -1,4 +1,4 @@
-/* Development log: shown in the Lab screen and, if configured, sent to `npm run devlog` on the Mac. */
+/* Development log: shown in the Lab screen and, if configured, sent to `npm run devlog` on your computer. */
 (function () {
     'use strict';
 

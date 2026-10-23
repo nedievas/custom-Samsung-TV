@@ -1,5 +1,6 @@
 // Receives the launcher's development log from the TV and appends it to logs/tv.jsonl.
-// The TV must be able to reach this Mac on the port below (macOS may ask to allow incoming connections).
+// The TV must be able to reach this computer on the port below; its firewall may need to allow it.
+// Under WSL the TV cannot reach Linux directly, so run this with Node on Windows or forward the port.
 import { createServer } from 'node:http';
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
