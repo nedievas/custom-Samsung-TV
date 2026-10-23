@@ -6,8 +6,7 @@
  * 'PlayStation' pass through untranslated. {name} placeholders are filled from params; entries
  * that need a plural are functions of params instead.
  *
- * The Lab screen and the hidden game stay in English: one is for development, the other is the
- * original author's.
+ * The Lab screen stays in English: it is for development.
  */
 (function () {
     'use strict';
@@ -145,6 +144,20 @@
         'Move later': 'Perkelti žemiau',
         'Remove': 'Pašalinti',
         'Remove {name}?': 'Pašalinti „{name}“?',
+
+        // Hidden game
+        'THE STORK RUN': 'GANDRO BĖGIMAS',
+        'HIDDEN GAME': 'SLAPTAS ŽAIDIMAS',
+        'Help the stork cross the fields': 'Padėk gandrui perbėgti laukus',
+        'OK / Up: jump     Down: duck': 'OK / Aukštyn: šuolis     Žemyn: pritūpti',
+        'Start': 'Pradėti',
+        'The stork tripped.': 'Gandras suklupo.',
+        'Distance': 'Atstumas',
+        'Try again': 'Bandyti dar kartą',
+        'OK / Up': 'OK / Aukštyn',
+        'Jump': 'Šuolis',
+        'Down': 'Žemyn',
+        'Duck': 'Pritūpti',
 
         // Advanced
         'Refresh app list': 'Atnaujinti programų sąrašą',

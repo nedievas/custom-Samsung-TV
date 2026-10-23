@@ -113,8 +113,8 @@ node scripts/prepare-wallpapers.mjs <folder>   # regenerate wallpapers from your
 | Back | one level back (does nothing on Home) |
 
 Hidden shortcuts: Red = All apps, Green = next wallpaper, Yellow (in All apps) = show system apps,
-Blue = Lab. On Home, Left and Right alternating three times (◀ ▶ ◀ ▶ ◀ ▶) starts the hidden game;
-OK / Up jumps, Down ducks, Back returns Home. The code alternates rather than repeating a key
+Blue = Lab. On Home, Left and Right alternating three times (◀ ▶ ◀ ▶ ◀ ▶) starts the hidden game, a stork
+jumping hay bales and ducking crows; OK / Up jumps, Down ducks, Back returns Home. The code alternates rather than repeating a key
 because a held remote key auto-repeats, which would both break a run-based code and fire it by
 accident while sweeping along a row.
 
@@ -136,7 +136,7 @@ src/                  everything that goes into the .wgt
   js/wallpaper.js     wallpaper display and rotation
   js/screensaver.js   idle screen saver: photos, slow zoom, clock
   js/appearance.js    clock and date settings
-  js/i18n.js          interface text in English or Lithuanian (Lab and the hidden game stay English)
+  js/i18n.js          interface text in English or Lithuanian (the Lab screen stays English)
   js/weather.js       Open-Meteo reading for the screen saver corner
   js/prefs.js         settings saved on the TV
   js/ui.js            screens, focus, keys, toast, pop-up menu
